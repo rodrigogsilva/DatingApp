@@ -1,4 +1,5 @@
-
+**/datingapp.db
+**/appsettings.json
 # Created by https://www.toptal.com/developers/gitignore/api/windows,linux,macos,visualstudio,virtualenv,visualstudiocode,angular,node,rider
 # Edit at https://www.toptal.com/developers/gitignore?templates=windows,linux,macos,visualstudio,virtualenv,visualstudiocode,angular,node,rider
 
