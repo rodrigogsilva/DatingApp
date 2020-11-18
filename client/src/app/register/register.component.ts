@@ -10,6 +10,7 @@ import { AccountService } from '../_services/account.service';
 export class RegisterComponent implements OnInit {
   @Output() cancelRegister = new EventEmitter();
   model: any = {};
+  validationErrors: string[] = [];
 
   constructor(
     private accountService: AccountService,
@@ -26,7 +27,7 @@ export class RegisterComponent implements OnInit {
       },
       (error) => {
         console.log(error);
-        this.toastr.error(error.error);
+        this.validationErrors = error;
       }
     );
   }
