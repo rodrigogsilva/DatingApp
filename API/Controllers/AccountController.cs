@@ -32,6 +32,11 @@ namespace API.Controllers
                 return BadRequest("Username is Taken");
             }
 
+            if (userRegister.Password != userRegister.ConfirmPassword)
+            {
+                return BadRequest("Password and Password Confirmation don't match");
+            }
+
             var user = _mapper.Map<AppUser>(userRegister);
 
             using var hmac = new HMACSHA512();
