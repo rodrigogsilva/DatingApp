@@ -25,7 +25,7 @@ namespace API.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<UserDTO>> Register(UserRegister userRegister)
+        public async Task<ActionResult<UserDto>> Register(UserRegister userRegister)
         {
             if (await UserExists(userRegister.UserName))
             {
@@ -49,7 +49,7 @@ namespace API.Controllers
 
             await _context.SaveChangesAsync();
 
-            return new UserDTO
+            return new UserDto
             {
                 Username = user.UserName,
                 Token = _tokenService.CreateToken(user),
@@ -59,7 +59,7 @@ namespace API.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<UserDTO>> Login(UserLogin userLogin)
+        public async Task<ActionResult<UserDto>> Login(UserLogin userLogin)
         {
             var user = await _context.Users
                 .Include(user => user.Photos)
@@ -82,7 +82,7 @@ namespace API.Controllers
                 }
             }
 
-            return new UserDTO
+            return new UserDto
             {
                 Username = user.UserName,
                 Token = _tokenService.CreateToken(user),
