@@ -1,7 +1,10 @@
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using API.Data;
+using API.Entities;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -17,11 +20,17 @@ namespace API
             using var scope = host.Services.CreateScope();
             var services = scope.ServiceProvider;
 
+            // var testing = Environment.GetEnvironmentVariable("NUMBER_OF_PROCESSORS");
+
             try
             {
                 var context = services.GetRequiredService<DataContext>();
+                var userManager = services.GetRequiredService<UserManager<AppUser>>();
+                var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
+
+
                 await context.Database.MigrateAsync();
-                await Seed.SeedUsers(context);
+                await Seed.SeedUsers(userManager, roleManager);
             }
             catch (Exception ex)
             {
@@ -35,8 +44,8 @@ namespace API
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+                    {
+                        webBuilder.UseStartup<Startup>();
+                    });
     }
 }

@@ -1,3 +1,4 @@
+import { JsonPipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
@@ -38,6 +39,12 @@ export class AccountService {
   }
 
   setCurrentUser(user: User) {
+    user.roles = [];
+
+    const roles = this._getDecodedToken(user.token).role;
+    user.roles.push(roles);
+    user.roles.flat();
+
     localStorage.setItem('user', JSON.stringify(user));
     this.currentUserSource.next(user);
   }
@@ -45,5 +52,9 @@ export class AccountService {
   logout() {
     localStorage.removeItem('user');
     this.currentUserSource.next(null);
+  }
+
+  _getDecodedToken(token: string) {
+    return JSON.parse(atob(token.split('.')[1]));
   }
 }
