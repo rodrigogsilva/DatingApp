@@ -26,7 +26,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     PaginationModule.forRoot(),
     ButtonsModule.forRoot(),
     TimeagoModule.forRoot(),
-    ModalModule,
+    ModalModule.forRoot(),
   ],
   exports: [
     BsDropdownModule,
